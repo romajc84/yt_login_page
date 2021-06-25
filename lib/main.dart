@@ -8,6 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: LoginPage(),
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -34,7 +35,7 @@ class LoginPageState extends State<LoginPage>
       duration: Duration(milliseconds: 500),
     );
     _iconAnimation = CurvedAnimation(
-        parent: _iconAnimationController, curve: Curves.bounceOut);
+        parent: _iconAnimationController, curve: Curves.easeOut);
     _iconAnimation.addListener(() => this.setState(() {}));
     _iconAnimationController.forward();
   }
@@ -56,7 +57,54 @@ class LoginPageState extends State<LoginPage>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FlutterLogo(
-                size: 100.0,
+                size: _iconAnimation.value * 100,
+              ),
+              Form(
+                child: Theme(
+                  data: ThemeData(
+                    brightness: Brightness.dark,
+                    primarySwatch: Colors.teal,
+                    inputDecorationTheme: InputDecorationTheme(
+                      labelStyle: TextStyle(
+                        color: Colors.teal,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(40.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Enter Email',
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Enter Password',
+                          ),
+                          keyboardType: TextInputType.text,
+                          obscureText: true,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40.0),
+                        ),
+                        MaterialButton(
+                          height: 40.0,
+                          minWidth: 100.0,
+                          color: Colors.teal,
+                          textColor: Colors.white,
+                          child: Icon(Icons.login),
+                          onPressed: () => {},
+                          splashColor: Colors.redAccent,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
